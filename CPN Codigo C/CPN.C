@@ -531,8 +531,7 @@ void TrainInstars(NET* Net, INT Epochs)
     PropagateToInstars(Net);
     i = Winner(Net);
     for (j=0; j<Net->InputLayer->Units; j++) {
-      Net->InstarLayer->Weight[i][j] +=
-        Net->Alpha * (Input[n][j] - Net->InstarLayer->Weight[i][j]);
+      Net->InstarLayer->Weight[i][j] += Net->Alpha * (Input[n][j] - Net->InstarLayer->Weight[i][j]);
     }
   }
 }
