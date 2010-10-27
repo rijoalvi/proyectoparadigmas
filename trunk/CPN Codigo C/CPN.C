@@ -553,8 +553,7 @@ void TrainOutstars(NET* Net, INT Epochs)
     PropagateToInstars(Net);
     j = Winner(Net);
     for (i=0; i<Net->OutstarLayer->Units; i++) {
-      Net->OutstarLayer->Weight[i][j] +=
-        Net->Beta * (Output[n][i] - Net->OutstarLayer->Weight[i][j]);
+      Net->OutstarLayer->Weight[i][j] += Net->Beta * (Output[n][i] - Net->OutstarLayer->Weight[i][j]);
     }
   }
 }
