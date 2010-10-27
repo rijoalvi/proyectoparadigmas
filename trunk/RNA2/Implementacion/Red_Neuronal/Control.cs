@@ -8,7 +8,7 @@ using System.Threading;
 namespace Red_Neuronal
 {
     /// <summary>
-    /// Lleva el control de la red neuronal
+    /// Lleva el control de la red neuronal de retropropagacion
     /// </summary>
     class Control
     {
