@@ -1,0 +1,50 @@
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe.config
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.ventana_acerca_de.resources
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.I_Principal.resources
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.Properties.Resources.resources
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.csproj.GenerateResource.Cache
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.pdb
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.exe
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.pdb
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA - original\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe.config
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA - original\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.exe
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA - original\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.pdb
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA - original\Implementacion\Red_Neuronal\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA - original\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.ventana_acerca_de.resources
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA - original\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.Properties.Resources.resources
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA - original\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.csproj.GenerateResource.Cache
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe.config
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.exe
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.pdb
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.ventana_acerca_de.resources
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.Properties.Resources.resources
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.csproj.GenerateResource.Cache
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.pdb
+C:\Documents and Settings\a40235\Desktop\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.I_Principal.resources
+<<<<<<< .mine
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe.config
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.exe
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.pdb
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.ventana_acerca_de.resources
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.I_Principal.resources
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.Properties.Resources.resources
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.csproj.GenerateResource.Cache
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe
+C:\Documents and Settings\a40235\Desktop\Proyecto paradigmas\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.pdb
+=======
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe.config
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.exe
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.pdb
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.pdb
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.ventana_acerca_de.resources
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.I_Principal.resources
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.Properties.Resources.resources
+C:\Users\Ricardo\Desktop\Proyecto Paradigmas\RNA2\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.csproj.GenerateResource.Cache
+>>>>>>> .r7
