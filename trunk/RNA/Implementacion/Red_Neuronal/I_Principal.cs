@@ -879,7 +879,6 @@ namespace Red_Neuronal
                     cont_entrenar = true;           //LLeva el control si debe de seguir entrenando o no
                     resultado_entrenamiento = 0;    //Guarda el codigo final del entrenamiento. 0: falló, 1: exitoso, 2:abortó
 
-                    
                     //Manda a entrenar la red
                     Thread p1;                                          //Hilo que se encarga del entrenamiento de la red
                     p1 = new Thread(new ThreadStart(this.entrenar_cp));
@@ -904,7 +903,7 @@ namespace Red_Neuronal
         private void entrenar_cp()
         {
             DateTime inicio = DateTime.Now;                                 //Guarda la hora a la que inicio el entrenamiento
-            resultado_entrenamiento = control_cp.entrenar(Convert.ToDouble(campo_alpha_cp.Value), Convert.ToDouble(campo_beta_cp.Value), campo_ruta_muestras_bp.Text, ref cont_entrenar);
+            resultado_entrenamiento = control_cp.entrenar(Convert.ToDouble(campo_alpha_cp.Value), Convert.ToDouble(campo_beta_cp.Value), campo_ruta_muestras_bp.Text);
             DateTime final = DateTime.Now;                                  //Guarda la hora en la que finaliza el entrenamiento
             TimeSpan total = final - inicio;                                //Calcula el tiempo total
             tiempo_final_entr_cp.Text = total.TotalSeconds.ToString();      //Muestra el tiempo total
