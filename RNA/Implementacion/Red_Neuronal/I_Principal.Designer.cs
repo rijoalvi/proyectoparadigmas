@@ -220,13 +220,13 @@
             this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_salir});
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.archivoToolStripMenuItem.Text = "Archivo";
             // 
             // menu_salir
             // 
             this.menu_salir.Name = "menu_salir";
-            this.menu_salir.Size = new System.Drawing.Size(96, 22);
+            this.menu_salir.Size = new System.Drawing.Size(105, 22);
             this.menu_salir.Text = "Salir";
             this.menu_salir.Click += new System.EventHandler(this.menu_salir_Click);
             // 
@@ -236,20 +236,20 @@
             this.menu_entrenamiento,
             this.menu_ejecucion});
             this.acciónToolStripMenuItem.Name = "acciónToolStripMenuItem";
-            this.acciónToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.acciónToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
             this.acciónToolStripMenuItem.Text = "Modo";
             // 
             // menu_entrenamiento
             // 
             this.menu_entrenamiento.Name = "menu_entrenamiento";
-            this.menu_entrenamiento.Size = new System.Drawing.Size(152, 22);
+            this.menu_entrenamiento.Size = new System.Drawing.Size(155, 22);
             this.menu_entrenamiento.Text = "Entrenamiento";
             this.menu_entrenamiento.Click += new System.EventHandler(this.menu_entrenamiento_Click);
             // 
             // menu_ejecucion
             // 
             this.menu_ejecucion.Name = "menu_ejecucion";
-            this.menu_ejecucion.Size = new System.Drawing.Size(152, 22);
+            this.menu_ejecucion.Size = new System.Drawing.Size(155, 22);
             this.menu_ejecucion.Text = "Ejecución";
             this.menu_ejecucion.Click += new System.EventHandler(this.menu_ejecucion_Click);
             // 
@@ -258,13 +258,13 @@
             this.ayudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_acerca_de});
             this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.ayudaToolStripMenuItem.Text = "Ayuda";
             // 
             // menu_acerca_de
             // 
             this.menu_acerca_de.Name = "menu_acerca_de";
-            this.menu_acerca_de.Size = new System.Drawing.Size(135, 22);
+            this.menu_acerca_de.Size = new System.Drawing.Size(145, 22);
             this.menu_acerca_de.Text = "Acerca de...";
             this.menu_acerca_de.Click += new System.EventHandler(this.menu_acerca_de_Click);
             // 
@@ -922,16 +922,16 @@
             // 
             // campo_resultado_ejecucion_bp
             // 
-            this.campo_resultado_ejecucion_bp.Location = new System.Drawing.Point(166, 212);
+            this.campo_resultado_ejecucion_bp.Location = new System.Drawing.Point(141, 212);
             this.campo_resultado_ejecucion_bp.Name = "campo_resultado_ejecucion_bp";
-            this.campo_resultado_ejecucion_bp.Size = new System.Drawing.Size(50, 50);
+            this.campo_resultado_ejecucion_bp.Size = new System.Drawing.Size(100, 100);
             this.campo_resultado_ejecucion_bp.TabIndex = 19;
             this.campo_resultado_ejecucion_bp.TabStop = false;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(258, 319);
+            this.label11.Location = new System.Drawing.Point(247, 355);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 13);
             this.label11.TabIndex = 18;
@@ -940,7 +940,7 @@
             // campo_tiempo_ejecucion_bp
             // 
             this.campo_tiempo_ejecucion_bp.BackColor = System.Drawing.SystemColors.Window;
-            this.campo_tiempo_ejecucion_bp.Location = new System.Drawing.Point(166, 319);
+            this.campo_tiempo_ejecucion_bp.Location = new System.Drawing.Point(155, 355);
             this.campo_tiempo_ejecucion_bp.Name = "campo_tiempo_ejecucion_bp";
             this.campo_tiempo_ejecucion_bp.ReadOnly = true;
             this.campo_tiempo_ejecucion_bp.Size = new System.Drawing.Size(86, 20);
@@ -949,7 +949,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(26, 319);
+            this.label9.Location = new System.Drawing.Point(12, 355);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(128, 13);
             this.label9.TabIndex = 16;
@@ -1070,16 +1070,16 @@
             // 
             // campo_resultado_ejecucion_cp
             // 
-            this.campo_resultado_ejecucion_cp.Location = new System.Drawing.Point(162, 210);
+            this.campo_resultado_ejecucion_cp.Location = new System.Drawing.Point(139, 210);
             this.campo_resultado_ejecucion_cp.Name = "campo_resultado_ejecucion_cp";
-            this.campo_resultado_ejecucion_cp.Size = new System.Drawing.Size(50, 50);
+            this.campo_resultado_ejecucion_cp.Size = new System.Drawing.Size(100, 100);
             this.campo_resultado_ejecucion_cp.TabIndex = 20;
             this.campo_resultado_ejecucion_cp.TabStop = false;
             // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(254, 319);
+            this.label30.Location = new System.Drawing.Point(251, 355);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(53, 13);
             this.label30.TabIndex = 18;
@@ -1088,7 +1088,7 @@
             // campo_tiempo_ejecucion_cp
             // 
             this.campo_tiempo_ejecucion_cp.BackColor = System.Drawing.SystemColors.Window;
-            this.campo_tiempo_ejecucion_cp.Location = new System.Drawing.Point(162, 319);
+            this.campo_tiempo_ejecucion_cp.Location = new System.Drawing.Point(159, 355);
             this.campo_tiempo_ejecucion_cp.Name = "campo_tiempo_ejecucion_cp";
             this.campo_tiempo_ejecucion_cp.ReadOnly = true;
             this.campo_tiempo_ejecucion_cp.Size = new System.Drawing.Size(86, 20);
@@ -1097,7 +1097,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(22, 319);
+            this.label31.Location = new System.Drawing.Point(21, 355);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(128, 13);
             this.label31.TabIndex = 16;
@@ -1273,6 +1273,7 @@
             // 
             // campo_muestra
             // 
+            this.campo_muestra.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.campo_muestra.Location = new System.Drawing.Point(215, 15);
             this.campo_muestra.Name = "campo_muestra";
             this.campo_muestra.Size = new System.Drawing.Size(50, 50);
