@@ -169,5 +169,14 @@ namespace Red_Neuronal
             return cant_neuronas_Capa_salida;
         }
 
+        /// <summary>
+        /// Retorna la matriz con los pesos de la capa oculta
+        /// </summary>
+        /// <returns></returns>
+        public double[,] get_pesos_oculta()
+        {
+            return pesos_capa_oculta;
+        }
+
     }///Fin de la clase
 }
