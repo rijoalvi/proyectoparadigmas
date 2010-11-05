@@ -39,7 +39,7 @@
             this.menu_ejecucion = new System.Windows.Forms.ToolStripMenuItem();
             this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu_acerca_de = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel_entrenamiento_bp = new System.Windows.Forms.Panel();
+            this.panel_entrenamiento = new System.Windows.Forms.Panel();
             this.campo_elegir_tipo_red = new System.Windows.Forms.ComboBox();
             this.label33 = new System.Windows.Forms.Label();
             this.configuracion_red_cp = new System.Windows.Forms.GroupBox();
@@ -56,7 +56,7 @@
             this.boton_elegir_ruta_muestras_cp = new System.Windows.Forms.Button();
             this.campo_ruta_muestras_cp = new System.Windows.Forms.TextBox();
             this.campo_alpha_cp = new System.Windows.Forms.NumericUpDown();
-            this.campo_beta_cp = new System.Windows.Forms.NumericUpDown();
+            this.error_capa_oculta_cp = new System.Windows.Forms.NumericUpDown();
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
@@ -154,7 +154,7 @@
             this.label42 = new System.Windows.Forms.Label();
             this.imagenes_figuras = new System.Windows.Forms.ImageList(this.components);
             this.menu_principal.SuspendLayout();
-            this.panel_entrenamiento_bp.SuspendLayout();
+            this.panel_entrenamiento.SuspendLayout();
             this.configuracion_red_cp.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.campo_cant_salida)).BeginInit();
@@ -162,7 +162,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.campo_cant_entrada_cp)).BeginInit();
             this.groupBox11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.campo_alpha_cp)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.campo_beta_cp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error_capa_oculta_cp)).BeginInit();
             this.configuracion_red_bp.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.campo_neuronas_salida_bp)).BeginInit();
@@ -220,13 +220,13 @@
             this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_salir});
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
-            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.archivoToolStripMenuItem.Text = "Archivo";
             // 
             // menu_salir
             // 
             this.menu_salir.Name = "menu_salir";
-            this.menu_salir.Size = new System.Drawing.Size(105, 22);
+            this.menu_salir.Size = new System.Drawing.Size(96, 22);
             this.menu_salir.Text = "Salir";
             this.menu_salir.Click += new System.EventHandler(this.menu_salir_Click);
             // 
@@ -236,20 +236,20 @@
             this.menu_entrenamiento,
             this.menu_ejecucion});
             this.acciónToolStripMenuItem.Name = "acciónToolStripMenuItem";
-            this.acciónToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.acciónToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.acciónToolStripMenuItem.Text = "Modo";
             // 
             // menu_entrenamiento
             // 
             this.menu_entrenamiento.Name = "menu_entrenamiento";
-            this.menu_entrenamiento.Size = new System.Drawing.Size(155, 22);
+            this.menu_entrenamiento.Size = new System.Drawing.Size(152, 22);
             this.menu_entrenamiento.Text = "Entrenamiento";
             this.menu_entrenamiento.Click += new System.EventHandler(this.menu_entrenamiento_Click);
             // 
             // menu_ejecucion
             // 
             this.menu_ejecucion.Name = "menu_ejecucion";
-            this.menu_ejecucion.Size = new System.Drawing.Size(155, 22);
+            this.menu_ejecucion.Size = new System.Drawing.Size(152, 22);
             this.menu_ejecucion.Text = "Ejecución";
             this.menu_ejecucion.Click += new System.EventHandler(this.menu_ejecucion_Click);
             // 
@@ -258,28 +258,28 @@
             this.ayudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menu_acerca_de});
             this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.ayudaToolStripMenuItem.Text = "Ayuda";
             // 
             // menu_acerca_de
             // 
             this.menu_acerca_de.Name = "menu_acerca_de";
-            this.menu_acerca_de.Size = new System.Drawing.Size(145, 22);
+            this.menu_acerca_de.Size = new System.Drawing.Size(135, 22);
             this.menu_acerca_de.Text = "Acerca de...";
             this.menu_acerca_de.Click += new System.EventHandler(this.menu_acerca_de_Click);
             // 
-            // panel_entrenamiento_bp
+            // panel_entrenamiento
             // 
-            this.panel_entrenamiento_bp.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel_entrenamiento_bp.Controls.Add(this.campo_elegir_tipo_red);
-            this.panel_entrenamiento_bp.Controls.Add(this.label33);
-            this.panel_entrenamiento_bp.Controls.Add(this.configuracion_red_cp);
-            this.panel_entrenamiento_bp.Controls.Add(this.configuracion_red_bp);
-            this.panel_entrenamiento_bp.Location = new System.Drawing.Point(0, 28);
-            this.panel_entrenamiento_bp.Name = "panel_entrenamiento_bp";
-            this.panel_entrenamiento_bp.Size = new System.Drawing.Size(1176, 459);
-            this.panel_entrenamiento_bp.TabIndex = 2;
-            this.panel_entrenamiento_bp.Visible = false;
+            this.panel_entrenamiento.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.panel_entrenamiento.Controls.Add(this.campo_elegir_tipo_red);
+            this.panel_entrenamiento.Controls.Add(this.label33);
+            this.panel_entrenamiento.Controls.Add(this.configuracion_red_cp);
+            this.panel_entrenamiento.Controls.Add(this.configuracion_red_bp);
+            this.panel_entrenamiento.Location = new System.Drawing.Point(0, 28);
+            this.panel_entrenamiento.Name = "panel_entrenamiento";
+            this.panel_entrenamiento.Size = new System.Drawing.Size(1176, 459);
+            this.panel_entrenamiento.TabIndex = 2;
+            this.panel_entrenamiento.Visible = false;
             // 
             // campo_elegir_tipo_red
             // 
@@ -362,7 +362,7 @@
             this.campo_cant_salida.Size = new System.Drawing.Size(61, 20);
             this.campo_cant_salida.TabIndex = 10;
             this.campo_cant_salida.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
             0});
@@ -450,7 +450,7 @@
             this.groupBox11.Controls.Add(this.boton_elegir_ruta_muestras_cp);
             this.groupBox11.Controls.Add(this.campo_ruta_muestras_cp);
             this.groupBox11.Controls.Add(this.campo_alpha_cp);
-            this.groupBox11.Controls.Add(this.campo_beta_cp);
+            this.groupBox11.Controls.Add(this.error_capa_oculta_cp);
             this.groupBox11.Controls.Add(this.label37);
             this.groupBox11.Controls.Add(this.label38);
             this.groupBox11.Controls.Add(this.label41);
@@ -512,24 +512,24 @@
             0,
             65536});
             // 
-            // campo_beta_cp
+            // error_capa_oculta_cp
             // 
-            this.campo_beta_cp.DecimalPlaces = 2;
-            this.campo_beta_cp.Increment = new decimal(new int[] {
+            this.error_capa_oculta_cp.DecimalPlaces = 2;
+            this.error_capa_oculta_cp.Increment = new decimal(new int[] {
             5,
             0,
             0,
             131072});
-            this.campo_beta_cp.Location = new System.Drawing.Point(803, 44);
-            this.campo_beta_cp.Maximum = new decimal(new int[] {
+            this.error_capa_oculta_cp.Location = new System.Drawing.Point(803, 44);
+            this.error_capa_oculta_cp.Maximum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.campo_beta_cp.Name = "campo_beta_cp";
-            this.campo_beta_cp.Size = new System.Drawing.Size(61, 20);
-            this.campo_beta_cp.TabIndex = 6;
-            this.campo_beta_cp.Value = new decimal(new int[] {
+            this.error_capa_oculta_cp.Name = "error_capa_oculta_cp";
+            this.error_capa_oculta_cp.Size = new System.Drawing.Size(61, 20);
+            this.error_capa_oculta_cp.TabIndex = 6;
+            this.error_capa_oculta_cp.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -560,7 +560,7 @@
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(157, 13);
             this.label41.TabIndex = 1;
-            this.label41.Text = "Coeficiente de aprendizaje Beta";
+            this.label41.Text = "Error permitido para capa oculta";
             // 
             // configuracion_red_bp
             // 
@@ -1646,11 +1646,11 @@
             this.ClientSize = new System.Drawing.Size(1176, 510);
             this.Controls.Add(this.barra_estado);
             this.Controls.Add(this.menu_principal);
-            this.Controls.Add(this.panel_ejecucion);
-            this.Controls.Add(this.panel_entrenamiento_bp);
             this.Controls.Add(this.panel_entrenamiento_cp);
             this.Controls.Add(this.panel_muestra_entrenamiento_bp);
             this.Controls.Add(this.panel_crear_muestras);
+            this.Controls.Add(this.panel_ejecucion);
+            this.Controls.Add(this.panel_entrenamiento);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_principal;
@@ -1661,8 +1661,8 @@
             this.Load += new System.EventHandler(this.I_Principal_Load);
             this.menu_principal.ResumeLayout(false);
             this.menu_principal.PerformLayout();
-            this.panel_entrenamiento_bp.ResumeLayout(false);
-            this.panel_entrenamiento_bp.PerformLayout();
+            this.panel_entrenamiento.ResumeLayout(false);
+            this.panel_entrenamiento.PerformLayout();
             this.configuracion_red_cp.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -1672,7 +1672,7 @@
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.campo_alpha_cp)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.campo_beta_cp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.error_capa_oculta_cp)).EndInit();
             this.configuracion_red_bp.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
@@ -1729,7 +1729,7 @@
         private System.Windows.Forms.ToolStripMenuItem menu_ejecucion;
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menu_acerca_de;
-        private System.Windows.Forms.Panel panel_entrenamiento_bp;
+        private System.Windows.Forms.Panel panel_entrenamiento;
         private System.Windows.Forms.GroupBox configuracion_red_bp;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label2;
@@ -1828,7 +1828,7 @@
         private System.Windows.Forms.Button boton_elegir_ruta_muestras_cp;
         private System.Windows.Forms.TextBox campo_ruta_muestras_cp;
         private System.Windows.Forms.NumericUpDown campo_alpha_cp;
-        private System.Windows.Forms.NumericUpDown campo_beta_cp;
+        private System.Windows.Forms.NumericUpDown error_capa_oculta_cp;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label41;

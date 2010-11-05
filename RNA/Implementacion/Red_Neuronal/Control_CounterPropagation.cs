@@ -15,8 +15,10 @@ namespace Red_Neuronal
 
          //Variables globales
         private Red_Neuronal_CounterPropagation red_neuronal;
+        private double[,] pesos_anteriores;
         private const double bin_uno = 0.99;
         private const double bin_cero = 0.01;
+        private const int iteraciones_minimas = 50;
 
         /// <summary>
         /// Constructor
@@ -24,6 +26,7 @@ namespace Red_Neuronal
         public Control_CounterPropagation()
         {
             red_neuronal = null;
+            pesos_anteriores = null;
         }
 
         /// <summary>
@@ -38,16 +41,29 @@ namespace Red_Neuronal
             {
                 red_neuronal = null;
             }
-            red_neuronal = new Red_Neuronal_CounterPropagation(cantEntrada, cantOculta, cantSalida); //Inicializa la red
-            inicializar_pesos_aleatorios(); //Se inicializan los pesos de la red de manera aleatoria
+            red_neuronal = new Red_Neuronal_CounterPropagation(cantEntrada, cantOculta, cantSalida);//Inicializa la red
+            inicializar_pesos_entrenamiento();                                                      //Inicializa los pesos para el entrenamiento, si falla sale                        
+            pesos_anteriores = new double[cantEntrada, cantOculta];
         }
 
         /// <summary>
-        /// Inicializa los pesos de la red con valores aleatorios entre los limites especificads
+        /// Inicializa los pesos de la red para realizar el entrenamiento
         /// </summary>
-        private void inicializar_pesos_aleatorios()
+        /// <param name="ruta_muestras">Ruta de las muestras con las que se desea entrenar</param>
+        private void inicializar_pesos_entrenamiento()
         {
-            //INICIALIZAR PESOS PARA APRENDIZAJE
+            double peso = bin_uno;
+            Random r = new Random((int)DateTime.Now.Ticks);
+            for (int i = 0; i < red_neuronal.get_cantidad_neuronas_oculta(); ++i)                      //Para cada una de las neuronas ocultas, excepto umbral
+            {
+                for (int h = 0; h < red_neuronal.get_cantidad_neuronas_entrada(); ++h)                 //Para cada una de las neuronas de entrada
+                {
+                    //Calcula el peso
+                    //if (i == 0) { peso = bin_uno; } else { peso = bin_cero + (r.NextDouble() * (bin_uno - bin_cero));}
+                    peso = 1;
+                    red_neuronal.set_peso_oculta(h, i, peso);  //Establece el nuevo peso
+                }
+            }
         }
 
         /// <summary>
@@ -83,14 +99,14 @@ namespace Red_Neuronal
         /// Se encarga del entrenamiento de la RN
         /// </summary>
         /// <param name="c_aprendizaje_alpha">Coeficiente de aprendizaje alpha para el ajuste de los pesos en la capa oculta</param>
-        /// <param name="c_aprendizaje_beta">Coeficiente de aprendizaje beta para el ajuste de los pesos en la capa de salida</param>
+        /// <param name="error_permitido_oculta">Error permitido en entrenamiento de capa oculta</param>
         /// <param name="ruta_muestras">Ruta del archivo de las muestras</param>
         /// <returns>0: falló, 1: exitoso</returns>
-        public int entrenar(double c_aprendizaje_alpha, double c_aprendizaje_beta, String ruta_muestras)
+        public int entrenar(double c_aprendizaje_alpha, double error_permitido_oculta, String ruta_muestras)
         {
-            if (entrenar_oculta(c_aprendizaje_alpha, ruta_muestras) == 0) return 0;     //Entrena la capa oculta, y si falla sale
-            if (entrenar_salida(c_aprendizaje_beta, ruta_muestras) == 0) return 0;      //Entrena la capa de salida, y si falla sale
-            return 1;                                                                   //Si se entrena correctamente informa el exito
+            if (entrenar_oculta(c_aprendizaje_alpha, ruta_muestras, error_permitido_oculta) == 0) return 0; //Entrena la capa oculta, y si falla sale
+            if (entrenar_salida(ruta_muestras) == 0) return 0;                                              //Entrena la capa de salida, y si falla sale
+            return 1;                                                                                       //Si se entrena correctamente informa el exito
         }
 
         /// <summary>
@@ -141,8 +157,9 @@ namespace Red_Neuronal
         /// </summary>
         /// <param name="c_aprendizaje_alpha">Coeficiente de aprendizaje</param>
         /// <param name="ruta_muestras">Ruta del archivo de las muestras</param>
+        /// <param name="error_permitido_oculta">Error premitido en el entrenamiento</param>
         /// <returns>0: falló, 1: exitoso</returns>
-        private int entrenar_oculta(double c_aprendizaje_alpha, String ruta_muestras)
+        private int entrenar_oculta(double c_aprendizaje_alpha, String ruta_muestras, double error_permitido_oculta)
         {
             try
             {
@@ -160,11 +177,18 @@ namespace Red_Neuronal
                         inicializar_entrada(muestra);                                               //Ingresa los valores de entrada, normalizados
                         ganador = propagar_oculta();                                                //Propaga en la capa oculta
                         ajustar_pesos_oculta(ganador, c_aprendizaje_alpha);                         //Ajusta los pesos de la capa oculta
-                        otra_iteracion = false;  //AQUI SE CALCULA LA CONDICION DE PARADA
                     }
-                    ++iteraciones;                      //Cuenta las iteraciones
-                    archivo_muestras.Close();           //Cierra el archivo
+                    ++iteraciones;                              //Cuenta las iteraciones
+                    archivo_muestras.Close();                   //Cierra el archivo
                     archivo.Close();
+                    if (iteraciones_minimas > iteraciones)      //Si no ha cumplido con la cantidad minima de iteraciones
+                    {
+                        otra_iteracion = true;  
+                    }
+                    else
+                    {
+                        otra_iteracion = iterar_nuevamente(error_permitido_oculta); //Calcula si debe de iterar de nuevo
+                    }
                 }
             }
             catch (Exception e)
@@ -176,38 +200,73 @@ namespace Red_Neuronal
         }
 
         /// <summary>
+        /// Calcula si debe de iterar de nuevo
+        /// </summary>
+        /// <param name="error_permitido">El error que se permite en los pesos</param>
+        /// <returns>True si debe de volver a iterar</returns>
+        private bool iterar_nuevamente(double error_permitido)
+        {
+            double error_generado = 0.0;    //guarda el error general
+            bool volver_iterar = false;     //Dice si se debe de volver a iterar
+            for (int j = 0; j < red_neuronal.get_cantidad_neuronas_oculta(); ++j)       //recorre todas las neuronas de la capa oculta
+            {
+                for (int h = 0; h < red_neuronal.get_cantidad_neuronas_entrada(); ++h)  //recorre todas las neuronas de la capa de entrada
+                {
+                    double error_salida = Math.Abs(red_neuronal.get_peso_oculta(h,j) - pesos_anteriores[h,j]);  //Calcula el error de los pesos
+                    error_generado += error_salida;
+                }
+            }
+            error_generado /= (red_neuronal.get_cantidad_neuronas_oculta() * red_neuronal.get_cantidad_neuronas_entrada()); //Saca el promedio
+            if (error_generado > error_permitido) volver_iterar = true; //Si no cumple con el error debe de volver a iterar
+            pesos_anteriores = red_neuronal.get_pesos_oculta();         //Estable los pesos como los pesos anterioes
+            return volver_iterar;           
+        }
+
+        /// <summary>
         /// Se encarga del entrenamiento de la capa de salida
         /// </summary>
-        /// <param name="c_aprendizaje_beta">Coeficiente de aprendizaje</param>
         /// <param name="ruta_muestras">Ruta del archivo de las muestras</param>
         /// <returns>0: falló, 1: exitoso</returns>
-        private int entrenar_salida(double c_aprendizaje_beta, String ruta_muestras)
+        private int entrenar_salida(String ruta_muestras)
         {
             try
             {
                 String muestra = "";                                                                //Guarda una muestra
-                bool otra_iteracion = true;                                                         //Dice si se debe volver a iterar
-                int iteraciones = 0;                                                                //Cuenta el numero de iteraciones
-                double[] valor_esperado;                                                            //Guarda el valor esperado de la muestra
                 int ganador = 0;                                                                    //Guarda el indice de la neurona ganadora en la capa oculta
-                while (otra_iteracion)                                                              //Mientras deba iterar
+                int[,] promedios = new int[red_neuronal.get_cantidad_neuronas_oculta(), red_neuronal.get_cantidad_neuronas_oculta()]; //Guarda los promedios para cada salida
+                FileStream archivo = new FileStream(ruta_muestras, FileMode.Open, FileAccess.Read);
+                StreamReader archivo_muestras = new StreamReader(archivo);                          //Abre el archivo especificado
+                
+                //Cuenta el numero de veces que es la ganadora para cada muestra
+                int i = 0;
+                while((muestra = archivo_muestras.ReadLine()) != null)                              //Lleva el control de cada iteracion
                 {
-                    FileStream archivo = new FileStream(ruta_muestras, FileMode.Open, FileAccess.Read);
-                    StreamReader archivo_muestras = new StreamReader(archivo);                      //Abre el archivo especificado
-                    otra_iteracion = false;                                                         //Limpia la variable de la iteracion
-                    while ((muestra = archivo_muestras.ReadLine()) != null)                         //Lleva el control de cada iteracion
-                    {
-                        inicializar_entrada(muestra);                                               //Ingresa los valores de entrada, normalizados
-                        ganador = propagar_oculta();                                                //Propaga en la capa oculta
-                        propagar_salida(ganador);                                                   //Propaga en la capa de salida
-                        valor_esperado = obtener_salida_esperada(muestra);                          //Obtiene la salida esperada
-                        ajustar_pesos_salida(ganador, c_aprendizaje_beta,valor_esperado);           //Ajusta los pesos de la capa de salida
-                        otra_iteracion = false;  //AQUI SE CALCULA LA CONDICION DE PARADA
-                    }
-                    ++iteraciones;                      //Cuenta las iteraciones
-                    archivo_muestras.Close();           //Cierra el archivo
-                    archivo.Close();
+                    inicializar_entrada(muestra);                                                   //Ingresa los valores de entrada, normalizados
+                    ganador = propagar_oculta();                                                    //Propaga en la capa oculta
+                    ++promedios[i, ganador];
+                    ++i;
+                    if(i+1 >= red_neuronal.get_cantidad_neuronas_oculta())i = 0;
                 }
+                archivo_muestras.Close();           //Cierra el archivo
+                archivo.Close();
+                
+                //Saca las neuronas ganadoras para cada una de los tipos de muestra
+                int[] indices_ganador = new int[red_neuronal.get_cantidad_neuronas_oculta()];   //Guarda los indices la capa oculta que mapea cada tipo de salida, [muestra] = neurona
+                for (int j = 0; j < red_neuronal.get_cantidad_neuronas_oculta(); ++j)           //Recorre para cada tipo de muestra
+                {
+                    int max = 0;                                                            //Guarda el maximo de indice de para cada muestra
+                    int indice_ganador = 0;                                                 //Guarda el indice de la neurona oculta que contien el maximo 
+                    for (int k = 0; k < red_neuronal.get_cantidad_neuronas_oculta(); ++k)   //Recorre para cada una de las neuronas de la capa oculta (clase)
+                    {
+                        if (promedios[j, k] > max)           //Si es un nuevo maximo
+                        {          
+                            max = promedios[j, k];          //Guarda el nuevo maximo
+                            indice_ganador = k;             //Guarda el indice del mayor
+                        }
+                    }
+                    indices_ganador[j] = indice_ganador;    //Guarda el indice de la neurona ganadora para la muestra 
+                }
+                ajustar_pesos_salida(indices_ganador);      //Ajusta los pesos de la capa de salida
             }
             catch (Exception e)
             {
@@ -266,22 +325,32 @@ namespace Red_Neuronal
             //Establece los nuevos pesos de la capa oculta
             for (int h = 0; h < red_neuronal.get_cantidad_neuronas_entrada(); ++h)  //Para cada una de las neuronas de entrada
             {
+                double peso_viejo = red_neuronal.get_peso_oculta(h, neurona_ganadora); //PRUEBA
                 red_neuronal.set_peso_oculta(h, neurona_ganadora, nuevo_peso_oculta(h, neurona_ganadora, c_aprendizaje_alpha));  //Calcula y establece el nuevo peso
+                peso_viejo = red_neuronal.get_peso_oculta(h, neurona_ganadora);//PRUEBA
             }
         }
 
         /// <summary>
-        /// Propaga en la capa de salida
+        /// Ajusta los pesos para la capa de salida
         /// </summary>
-        /// <param name="neurona_ganadora">Indice de la neurona ganadora</param>
-        /// <param name="c_aprendizaje_beta">Coeficiente de aprendizaje</param>
-        /// <param name="salida_esperada">Arreglo con la salida esperada</param>
-        private void ajustar_pesos_salida(int neurona_ganadora, double c_aprendizaje_beta, double[] salida_esperada)
+        /// <param name="indices_ganador">Neuronas ocultas ganadoras para cada tipo de muestra</param>
+        private void ajustar_pesos_salida(int[] indices_ganador)
         {
             //Establece los nuevos pesos de la capa oculta
-            for (int h = 0; h < red_neuronal.get_cantidad_neuronas_salida(); ++h)  //Para cada una de las neuronas de salida
+            for (int num_muestra = 0; num_muestra < red_neuronal.get_cantidad_neuronas_oculta(); ++num_muestra)  //Para cada una de las muestras
             {
-                red_neuronal.set_peso_salida(neurona_ganadora,h, nuevo_peso_salida(h, neurona_ganadora, c_aprendizaje_beta, salida_esperada));  //Calcula y establece el nuevo peso
+                for (int i = 0; i < red_neuronal.get_cantidad_neuronas_salida(); ++i)       //Para cada una de las neuronas de salida
+                {
+                    if (i == num_muestra)                                                   //Si debe de ser 1, segun el numero de muestra
+                    {
+                        red_neuronal.set_peso_salida(indices_ganador[num_muestra], i, 1);
+                    }
+                    else
+                    {
+                        red_neuronal.set_peso_salida(indices_ganador[num_muestra], i, 0);
+                    }
+                }
             }
         }
 
@@ -309,27 +378,8 @@ namespace Red_Neuronal
         private double calcular_salida_salida(int neurona_salida, int neurona_oculta)
         {
             double salida = 0.0;    //Guarda la salida
-            
-            //APLICAR FUNCION PARA CALCULO DE SALIDA
-
+            salida = red_neuronal.get_peso_salida(neurona_oculta, neurona_salida); //Asigna el peso de la cpa de salida como al salida
             return salida;          //Retorna la salida
-        }
-
-        /// <summary>
-        /// Obtiene la salida esperada
-        /// </summary>
-        /// <param name="muestra">recibe la muestra</param>
-        /// <returns>retorna un arreglo con las salidas esperadas</returns>
-        private double[] obtener_salida_esperada(String muestra)
-        {
-            double[] salida = new double[red_neuronal.get_cantidad_neuronas_salida()];  //Guarda el valor de la salida esperada
-            int i = 0;
-            for (; i < red_neuronal.get_cantidad_neuronas_salida(); ++i)                //Recorre la linea de valor esperado de la muestra
-            {
-                int valor = Convert.ToInt32(new string(muestra[i], 1));                 //Guarda el valor esperado de la muestra
-                if (valor == 1) { salida[i] = bin_uno; } else { salida[i] = bin_cero; } //Codifica los valores del archivo a lo necesario en la ejecucion
-            }
-            return salida;
         }
 
         /// <summary>
@@ -343,20 +393,6 @@ namespace Red_Neuronal
         {
             double w = red_neuronal.get_peso_oculta(neurona_entrada, neurona_oculta);
             return (w + c_error * (red_neuronal.get_valor_oculta(neurona_oculta)- w)); 
-        }
-
-        /// <summary>
-        /// Calcula el nuevo peso de la capa de salida entre la neurona de la capa de salida y la neurona de la capa oculta
-        /// </summary>
-        /// <param name="neurona_salida">Indice de la neurona de la capa de salida</param>
-        /// <param name="neurona_oculta">Indice de la neurona de la capa oculta</param>
-        /// <param name="c_error">Recibe el coficiente del error</param>
-        /// <param name="salida_esperada">Arreglo con el resultado esperado</param>
-        /// <returns></returns>
-        private double nuevo_peso_salida(int neurona_salida, int neurona_oculta, double c_error, double[] salida_esperada)
-        {
-            double w = red_neuronal.get_peso_salida(neurona_oculta, neurona_salida);
-            return (w + c_error * ( salida_esperada[neurona_salida] - w));
         }
 
         /// <summary>
@@ -453,7 +489,7 @@ namespace Red_Neuronal
             double[] valor_entrada = new double[red_neuronal.get_cantidad_neuronas_entrada()];  //Guarda el valor de entrada de la muestra
             for (int i = 0; i < red_neuronal.get_cantidad_neuronas_entrada(); ++i)              //Recorre la linea de entradas de la muestra
             {
-                if (entrada[i] == 1)valor_entrada[i] = bin_uno;                             //Codifica los valores del archivo a lo necesario en la ejecucion
+                if (entrada[i] == 1)valor_entrada[i] = bin_uno;                                 //Codifica los valores del archivo a lo necesario en la ejecucion
                 else valor_entrada[i] = bin_cero;
             }
             normalizar(valor_entrada);                                                      //Normaliza la entrada
@@ -461,7 +497,6 @@ namespace Red_Neuronal
             propagar_salida(ganadora);                                                      //Propaga en la capa de salida
             
             //Toma la salida de la red (resultado)
-            //SI LA CAPA DE SALIDA CAMBNIA HAY QUE CAMBIAR ESTE METODO
             for (int j = 0; j < red_neuronal.get_cantidad_neuronas_salida(); ++j)           //Recorre todas las neuronas de la capa de salida
             {
                 int valor = 0;

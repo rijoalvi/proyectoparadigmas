@@ -61,7 +61,7 @@ namespace Red_Neuronal
         /// <param name="e"></param>
         private void I_Principal_Load(object sender, EventArgs e)
         {
-            panel_muestra_entrenamiento_bp.Visible = panel_ejecucion.Visible = panel_crear_muestras.Visible = panel_entrenamiento_bp.Visible = panel_entrenamiento_cp.Visible = false;
+            panel_muestra_entrenamiento_bp.Visible = panel_ejecucion.Visible = panel_crear_muestras.Visible = panel_entrenamiento.Visible = panel_entrenamiento_cp.Visible = false;
             menu_entrenamiento.Enabled = menu_ejecucion.Enabled = true;
             CheckForIllegalCrossThreadCalls = false;
         }
@@ -89,7 +89,7 @@ namespace Red_Neuronal
         {
             panel_ejecucion.Visible = panel_crear_muestras.Visible = panel_muestra_entrenamiento_bp.Visible = false;        //Habilita y deshabilita los botones correspondientes
             panel_entrenamiento_cp.Visible = false;
-            panel_entrenamiento_bp.Visible = true;
+            panel_entrenamiento.Visible = true;
             menu_entrenamiento.Enabled = false;
             menu_ejecucion.Enabled = true;
             red_bp_establecida = false;
@@ -110,7 +110,7 @@ namespace Red_Neuronal
         private void menu_ejecucion_Click(object sender, EventArgs e)
         {
             panel_ejecucion.Visible = true;         //Habilita y deshabilita los botones correspondientes
-            panel_entrenamiento_bp.Visible = panel_crear_muestras.Visible = panel_muestra_entrenamiento_bp.Visible = false;
+            panel_entrenamiento.Visible = panel_crear_muestras.Visible = panel_muestra_entrenamiento_bp.Visible = false;
             panel_entrenamiento_cp.Visible = false;
             menu_entrenamiento.Enabled = true;
             menu_ejecucion.Enabled = false;
@@ -497,7 +497,7 @@ namespace Red_Neuronal
         /// <param name="e"></param>
         private void boton_crear_muestras_Click(object sender, EventArgs e)
         {
-            panel_ejecucion.Visible = panel_entrenamiento_bp.Visible = panel_muestra_entrenamiento_bp.Visible = false;
+            panel_ejecucion.Visible = panel_entrenamiento.Visible = panel_muestra_entrenamiento_bp.Visible = false;
             panel_crear_muestras.Visible = true;
             campo_iteraciones_muestras.Value = 0;
         }
@@ -695,7 +695,7 @@ namespace Red_Neuronal
             campo_iteraciones_entrenamiento.Value = 0;
             if (panel_muestra_entrenamiento_bp.Visible == true)
             {
-                panel_ejecucion.Visible = panel_entrenamiento_bp.Visible = panel_crear_muestras.Visible =  false;        //Habilita y deshabilita los botones correspondientes
+                panel_ejecucion.Visible = panel_entrenamiento.Visible = panel_crear_muestras.Visible =  false;        //Habilita y deshabilita los botones correspondientes
                 menu_entrenamiento.Enabled = menu_ejecucion.Enabled = menu_acerca_de.Enabled = false;
             }
             else
@@ -875,8 +875,8 @@ namespace Red_Neuronal
                 if (File.Exists(campo_ruta_muestras_cp.Text))
                 {
                     panel_entrenamiento_cp.Visible = true;
+                    panel_entrenamiento.Visible = false;
                     control_cp.configurar_red_aprendizaje(Convert.ToInt32(campo_cant_entrada_cp.Value), Convert.ToInt32(campo_cant_ocult_cp.Value), Convert.ToInt32(campo_cant_salida.Value));
-                    cont_entrenar = true;           //LLeva el control si debe de seguir entrenando o no
                     resultado_entrenamiento = 0;    //Guarda el codigo final del entrenamiento. 0: falló, 1: exitoso, 2:abortó
 
                     //Manda a entrenar la red
@@ -903,7 +903,7 @@ namespace Red_Neuronal
         private void entrenar_cp()
         {
             DateTime inicio = DateTime.Now;                                 //Guarda la hora a la que inicio el entrenamiento
-            resultado_entrenamiento = control_cp.entrenar(Convert.ToDouble(campo_alpha_cp.Value), Convert.ToDouble(campo_beta_cp.Value), campo_ruta_muestras_bp.Text);
+            resultado_entrenamiento = control_cp.entrenar(Convert.ToDouble(campo_alpha_cp.Value), Convert.ToDouble(error_capa_oculta_cp.Value), campo_ruta_muestras_cp.Text);
             DateTime final = DateTime.Now;                                  //Guarda la hora en la que finaliza el entrenamiento
             TimeSpan total = final - inicio;                                //Calcula el tiempo total
             tiempo_final_entr_cp.Text = total.TotalSeconds.ToString();      //Muestra el tiempo total
