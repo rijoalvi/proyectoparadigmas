@@ -21,6 +21,7 @@ namespace Red_Neuronal
         private String muestras_creadas;                //Guarda la muestra que se crea
         private bool guardar_muestras;                  //Indica si se pueden guardar las muestras o no
         private int iteraciones;                        //Guarda el numero de iteraciones realizadas en el entrenamiento
+        private int iteraciones_cp;                     //Guarda el numero de iteraciones realizadas en el entrenamiento de la CP
         private double error_grafica;                   //Guarda el error de la iteracion para graficar durante el entrenamiento
         private bool cont_entrenar;                     //Anuncia si debe de seguir entrenando
         private Point origen;                           //Punto de origen para la graficacion
@@ -44,6 +45,7 @@ namespace Red_Neuronal
             control_cp = new Control_CounterPropagation();
             InitializeComponent();
             iteraciones = 0;
+            iteraciones_cp = 0;
             error_grafica = 0.0 ;
             resultado_entrenamiento = 0;
             iteracion_graficacion = 0;
@@ -99,7 +101,7 @@ namespace Red_Neuronal
             campo_muestra.BackgroundImage = imagenes_figuras.Images[0];
             campo_muestra.Text = "Círculo";
             guardar_muestras = false;
-            boton_abortar_entrenamiento.Enabled = boton_abortar_cp.Enabled = true;
+            boton_abortar_entrenamiento.Enabled = true;
         }
 
         /// <summary>
@@ -313,6 +315,20 @@ namespace Red_Neuronal
                 {
                     campo_iteraciones_entrenamiento.Value = iteraciones;
                     graficar_error(error_grafica,iteraciones);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Se encarga de mostrar en la interfaz el entrenamiento que se esta realizando de la RN de CP
+        /// </summary>
+        private void mostrar_entrenamiento_cp()
+        {
+            while (cont_entrenar)
+            {
+                if (num_it_entr_cp.Value != iteraciones_cp)
+                {
+                    num_it_entr_cp.Value = iteraciones_cp;
                 }
             }
         }
@@ -878,6 +894,8 @@ namespace Red_Neuronal
                     panel_entrenamiento.Visible = false;
                     control_cp.configurar_red_aprendizaje(Convert.ToInt32(campo_cant_entrada_cp.Value), Convert.ToInt32(campo_cant_ocult_cp.Value), Convert.ToInt32(campo_cant_salida.Value));
                     resultado_entrenamiento = 0;    //Guarda el codigo final del entrenamiento. 0: falló, 1: exitoso, 2:abortó
+                    iteraciones_cp = 0;
+                    cont_entrenar = true;
 
                     //Manda a entrenar la red
                     Thread p1;                                          //Hilo que se encarga del entrenamiento de la red
@@ -885,6 +903,12 @@ namespace Red_Neuronal
                     p1.SetApartmentState(ApartmentState.STA);
                     p1.IsBackground = true;
                     p1.Start();
+
+                    Thread p2;                                          //hilo que se encarga mostrar el entrenamiento en la interfaz
+                    p2 = new Thread(new ThreadStart(this.mostrar_entrenamiento_cp));
+                    p2.SetApartmentState(ApartmentState.STA);
+                    p2.IsBackground = true;
+                    p2.Start(); 
                 }
                 else
                 {
@@ -903,11 +927,11 @@ namespace Red_Neuronal
         private void entrenar_cp()
         {
             DateTime inicio = DateTime.Now;                                 //Guarda la hora a la que inicio el entrenamiento
-            resultado_entrenamiento = control_cp.entrenar(Convert.ToDouble(campo_alpha_cp.Value), Convert.ToDouble(error_capa_oculta_cp.Value), campo_ruta_muestras_cp.Text);
+            resultado_entrenamiento = control_cp.entrenar(Convert.ToDouble(campo_alpha_cp.Value), Convert.ToDouble(error_capa_oculta_cp.Value), campo_ruta_muestras_cp.Text, ref iteraciones_cp );
+            cont_entrenar = false;
             DateTime final = DateTime.Now;                                  //Guarda la hora en la que finaliza el entrenamiento
             TimeSpan total = final - inicio;                                //Calcula el tiempo total
             tiempo_final_entr_cp.Text = total.TotalSeconds.ToString();      //Muestra el tiempo total
-            boton_abortar_cp.Enabled = false;
             if (resultado_entrenamiento == 1)    //Si se realiza bien
             {
                 entrenamiento_finalizado("CP");     //Finaliza el entrenamiento
@@ -974,7 +998,7 @@ namespace Red_Neuronal
                     if (control_cp.configurar_red_ejecucion(campo_ruta_pesos_ejecucion_cp.Text))//Configura la red para la ejecucion
                     {
                         red_cp_establecida = true;                              //Se establecio la red
-                        boton_estabalecer_pesos_ejecucion_bp.Enabled = false;
+                        boton_estabalecer_pesos_ejecucion_cp.Enabled = false;
                     }
                     else                                                        //Si se produce un error al establecer la configuracion de la red
                     {

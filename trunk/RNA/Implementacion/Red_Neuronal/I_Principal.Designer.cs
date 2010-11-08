@@ -146,7 +146,6 @@
             this.panel_grafico_error = new System.Windows.Forms.Panel();
             this.ventana_salvar_pesos = new System.Windows.Forms.SaveFileDialog();
             this.panel_entrenamiento_cp = new System.Windows.Forms.Panel();
-            this.boton_abortar_cp = new System.Windows.Forms.Button();
             this.num_it_entr_cp = new System.Windows.Forms.NumericUpDown();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
@@ -514,12 +513,12 @@
             // 
             // error_capa_oculta_cp
             // 
-            this.error_capa_oculta_cp.DecimalPlaces = 2;
+            this.error_capa_oculta_cp.DecimalPlaces = 3;
             this.error_capa_oculta_cp.Increment = new decimal(new int[] {
             5,
             0,
             0,
-            131072});
+            196608});
             this.error_capa_oculta_cp.Location = new System.Drawing.Point(803, 44);
             this.error_capa_oculta_cp.Maximum = new decimal(new int[] {
             1,
@@ -530,10 +529,10 @@
             this.error_capa_oculta_cp.Size = new System.Drawing.Size(61, 20);
             this.error_capa_oculta_cp.TabIndex = 6;
             this.error_capa_oculta_cp.Value = new decimal(new int[] {
-            1,
+            5,
             0,
             0,
-            65536});
+            131072});
             // 
             // label37
             // 
@@ -1553,7 +1552,6 @@
             // panel_entrenamiento_cp
             // 
             this.panel_entrenamiento_cp.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.panel_entrenamiento_cp.Controls.Add(this.boton_abortar_cp);
             this.panel_entrenamiento_cp.Controls.Add(this.num_it_entr_cp);
             this.panel_entrenamiento_cp.Controls.Add(this.label39);
             this.panel_entrenamiento_cp.Controls.Add(this.label40);
@@ -1564,16 +1562,6 @@
             this.panel_entrenamiento_cp.Size = new System.Drawing.Size(1176, 460);
             this.panel_entrenamiento_cp.TabIndex = 18;
             this.panel_entrenamiento_cp.Visible = false;
-            // 
-            // boton_abortar_cp
-            // 
-            this.boton_abortar_cp.Location = new System.Drawing.Point(551, 251);
-            this.boton_abortar_cp.Name = "boton_abortar_cp";
-            this.boton_abortar_cp.Size = new System.Drawing.Size(75, 23);
-            this.boton_abortar_cp.TabIndex = 19;
-            this.boton_abortar_cp.Text = "Abortar";
-            this.boton_abortar_cp.UseVisualStyleBackColor = true;
-            this.boton_abortar_cp.Click += new System.EventHandler(this.boton_abortar_entrenamiento_Click);
             // 
             // num_it_entr_cp
             // 
@@ -1646,11 +1634,11 @@
             this.ClientSize = new System.Drawing.Size(1176, 510);
             this.Controls.Add(this.barra_estado);
             this.Controls.Add(this.menu_principal);
+            this.Controls.Add(this.panel_entrenamiento);
             this.Controls.Add(this.panel_entrenamiento_cp);
             this.Controls.Add(this.panel_muestra_entrenamiento_bp);
             this.Controls.Add(this.panel_crear_muestras);
             this.Controls.Add(this.panel_ejecucion);
-            this.Controls.Add(this.panel_entrenamiento);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_principal;
@@ -1833,7 +1821,6 @@
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Panel panel_entrenamiento_cp;
-        private System.Windows.Forms.Button boton_abortar_cp;
         private System.Windows.Forms.NumericUpDown num_it_entr_cp;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label40;
