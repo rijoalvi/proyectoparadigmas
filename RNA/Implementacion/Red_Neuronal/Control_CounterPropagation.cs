@@ -5,6 +5,9 @@ using System.Text;
 using System.IO;
 using System.Threading;
 
+using System.Windows.Forms;
+
+
 namespace Red_Neuronal
 {
     /// <summary>
@@ -18,7 +21,7 @@ namespace Red_Neuronal
         private double[,] pesos_anteriores;
         private const double bin_uno = 0.99;
         private const double bin_cero = 0.01;
-        private const int iteraciones_minimas = 50;
+        private const int iteraciones_minimas = 500;
 
         /// <summary>
         /// Constructor
@@ -59,8 +62,8 @@ namespace Red_Neuronal
                 for (int h = 0; h < red_neuronal.get_cantidad_neuronas_entrada(); ++h)                 //Para cada una de las neuronas de entrada
                 {
                     //Calcula el peso
-                    //if (i == 0) { peso = bin_uno; } else { peso = bin_cero + (r.NextDouble() * (bin_uno - bin_cero));}
-                    peso = 1;
+                    if (i == 0) { peso = bin_uno; } else { peso = bin_cero + (r.NextDouble() * (bin_uno - bin_cero));}
+                    //peso = 1;
                     red_neuronal.set_peso_oculta(h, i, peso);  //Establece el nuevo peso
                 }
             }
@@ -101,12 +104,13 @@ namespace Red_Neuronal
         /// <param name="c_aprendizaje_alpha">Coeficiente de aprendizaje alpha para el ajuste de los pesos en la capa oculta</param>
         /// <param name="error_permitido_oculta">Error permitido en entrenamiento de capa oculta</param>
         /// <param name="ruta_muestras">Ruta del archivo de las muestras</param>
+        /// <param name="num_iteracion">Guarda el numero de iteracion en la que se encuentra</param>
         /// <returns>0: falló, 1: exitoso</returns>
-        public int entrenar(double c_aprendizaje_alpha, double error_permitido_oculta, String ruta_muestras)
+        public int entrenar(double c_aprendizaje_alpha, double error_permitido_oculta, String ruta_muestras, ref int num_iteracion)
         {
-            if (entrenar_oculta(c_aprendizaje_alpha, ruta_muestras, error_permitido_oculta) == 0) return 0; //Entrena la capa oculta, y si falla sale
-            if (entrenar_salida(ruta_muestras) == 0) return 0;                                              //Entrena la capa de salida, y si falla sale
-            return 1;                                                                                       //Si se entrena correctamente informa el exito
+            if (entrenar_oculta(c_aprendizaje_alpha, ruta_muestras, error_permitido_oculta, ref num_iteracion) == 0) return 0;  //Entrena la capa oculta, y si falla sale
+            if (entrenar_salida(ruta_muestras) == 0) return 0;                                                                  //Entrena la capa de salida, y si falla sale
+            return 1;                                                                                                           //Si se entrena correctamente informa el exito
         }
 
         /// <summary>
@@ -158,8 +162,9 @@ namespace Red_Neuronal
         /// <param name="c_aprendizaje_alpha">Coeficiente de aprendizaje</param>
         /// <param name="ruta_muestras">Ruta del archivo de las muestras</param>
         /// <param name="error_permitido_oculta">Error premitido en el entrenamiento</param>
+        /// <param name="num_iteracion">Guarda el numero de iteracion en la que se encuentra</param>
         /// <returns>0: falló, 1: exitoso</returns>
-        private int entrenar_oculta(double c_aprendizaje_alpha, String ruta_muestras, double error_permitido_oculta)
+        private int entrenar_oculta(double c_aprendizaje_alpha, String ruta_muestras, double error_permitido_oculta, ref int num_iteracion)
         {
             try
             {
@@ -177,17 +182,22 @@ namespace Red_Neuronal
                         inicializar_entrada(muestra);                                               //Ingresa los valores de entrada, normalizados
                         ganador = propagar_oculta();                                                //Propaga en la capa oculta
                         ajustar_pesos_oculta(ganador, c_aprendizaje_alpha);                         //Ajusta los pesos de la capa oculta
+
+                        //if (ganador != 0) MessageBox.Show("Si gana otro hp aparate del 0");
+
                     }
                     ++iteraciones;                              //Cuenta las iteraciones
                     archivo_muestras.Close();                   //Cierra el archivo
                     archivo.Close();
+                    num_iteracion = iteraciones;
                     if (iteraciones_minimas > iteraciones)      //Si no ha cumplido con la cantidad minima de iteraciones
                     {
                         otra_iteracion = true;  
                     }
                     else
                     {
-                        otra_iteracion = iterar_nuevamente(error_permitido_oculta); //Calcula si debe de iterar de nuevo
+                        otra_iteracion = false;
+                        //otra_iteracion = iterar_nuevamente(error_permitido_oculta); //Calcula si debe de iterar de nuevo
                     }
                 }
             }
@@ -218,7 +228,15 @@ namespace Red_Neuronal
             }
             error_generado /= (red_neuronal.get_cantidad_neuronas_oculta() * red_neuronal.get_cantidad_neuronas_entrada()); //Saca el promedio
             if (error_generado > error_permitido) volver_iterar = true; //Si no cumple con el error debe de volver a iterar
-            pesos_anteriores = red_neuronal.get_pesos_oculta();         //Estable los pesos como los pesos anterioes
+
+            for (int j = 0; j < red_neuronal.get_cantidad_neuronas_oculta(); ++j)       //recorre todas las neuronas de la capa oculta
+            {
+                for (int h = 0; h < red_neuronal.get_cantidad_neuronas_entrada(); ++h)  //recorre todas las neuronas de la capa de entrada
+                {
+                    pesos_anteriores[h, j] = red_neuronal.get_peso_oculta(h, j);
+                }
+            }
+
             return volver_iterar;           
         }
 
@@ -288,17 +306,20 @@ namespace Red_Neuronal
                 red_neuronal.set_valor_oculta(i, calcular_salida_oculta(i));        //calcula la salida de la neurona
             }
 
-            //Pone la salida ganadora en 1 y el resto en 0
+            //Busca la neurona ganadora
             int ganador = 0;
             for (int h = 0; h < red_neuronal.get_cantidad_neuronas_oculta(); h++)   //Recorre toda la capa oculta
             {
-                if (red_neuronal.get_valor_oculta(h) > red_neuronal.get_valor_oculta(ganador))
-                { // compara cual es el ganador de la capa oculta
-                    red_neuronal.set_valor_oculta(ganador, bin_cero); //quita la salida ganadora del anterior
-                    ganador = h;
-                    red_neuronal.set_valor_oculta(ganador, bin_uno); //Coloca el valor de la nueva salida ganadora
-                }
+                if (red_neuronal.get_valor_oculta(h) > red_neuronal.get_valor_oculta(ganador))ganador = h;  //Guarda el ganador
             }
+
+            //Coloca para el ganador el valor 1 y el resto en 0
+            for (int h = 0; h < red_neuronal.get_cantidad_neuronas_oculta(); h++)   //Recorre toda la capa oculta
+            {
+                if (h == ganador) red_neuronal.set_valor_oculta(h, 1);        //Coloca el valor de la nueva salida ganadora
+                else red_neuronal.set_valor_oculta(h, 0); 
+            }
+
             return ganador;
         }
 
@@ -325,9 +346,7 @@ namespace Red_Neuronal
             //Establece los nuevos pesos de la capa oculta
             for (int h = 0; h < red_neuronal.get_cantidad_neuronas_entrada(); ++h)  //Para cada una de las neuronas de entrada
             {
-                double peso_viejo = red_neuronal.get_peso_oculta(h, neurona_ganadora); //PRUEBA
                 red_neuronal.set_peso_oculta(h, neurona_ganadora, nuevo_peso_oculta(h, neurona_ganadora, c_aprendizaje_alpha));  //Calcula y establece el nuevo peso
-                peso_viejo = red_neuronal.get_peso_oculta(h, neurona_ganadora);//PRUEBA
             }
         }
 
@@ -390,9 +409,12 @@ namespace Red_Neuronal
         /// <param name="c_error">Recibe el coficiente del error (alpha)</param>
         /// <returns>El nuevo peso calculado</returns>
         private double nuevo_peso_oculta(int neurona_entrada, int neurona_oculta, double c_error)
-        {
+        { 
             double w = red_neuronal.get_peso_oculta(neurona_entrada, neurona_oculta);
-            return (w + c_error * (red_neuronal.get_valor_oculta(neurona_oculta)- w)); 
+            //return (w + c_error * (red_neuronal.get_valor_oculta(neurona_oculta)- w));
+            double PRUEBA = (w + c_error * (red_neuronal.get_valor_entrada(neurona_entrada) - w));
+            if (w == PRUEBA) MessageBox.Show("Esta mierda no ajusta ni verga");
+            return (w + c_error * (red_neuronal.get_valor_entrada(neurona_entrada) - w));
         }
 
         /// <summary>
