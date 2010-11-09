@@ -438,6 +438,9 @@ namespace Red_Neuronal
             limpiar_matriz();
             panel_dibujo.Refresh();
             campo_resultado_ejecucion_bp.Text = campo_tiempo_ejecucion_bp.Text = "";
+            campo_resultado_ejecucion_bp.BackgroundImage =  null;
+            campo_resultado_ejecucion_cp.Text = campo_tiempo_ejecucion_cp.Text = "";
+            campo_resultado_ejecucion_cp.BackgroundImage = null;
         }
 
         /// <summary>
@@ -758,7 +761,7 @@ namespace Red_Neuronal
                     }
                     else
                     {
-                        DialogResult respuesta = MessageBox.Show("Se a producido un error al guardar los pesos.\nDesea intentar guardar los pesos de nuevo?", "Error al guardar archivo de pesos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                        DialogResult respuesta = MessageBox.Show("Se ha producido un error al guardar los pesos.\nDesea intentar guardar los pesos de nuevo?", "Error al guardar archivo de pesos", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                         if (respuesta == DialogResult.Yes)
                         {
                             intentar_nuevamente = true;
@@ -774,7 +777,7 @@ namespace Red_Neuronal
             else                                                                    //Si se cancelo el guardado
             {
                 //Advierte y pregunta si desea intentarlo de nuevo
-                DialogResult respuesta = MessageBox.Show("A decidido no guardar los pesos resultado del entrenamiento.\nPor lo cual el entrenamiento no será satisfactorio.\nDesea guardar los pesos?", "Error archivo de pesos", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult respuesta = MessageBox.Show("Ha decidido no guardar los pesos resultado del entrenamiento.\nPor lo cual el entrenamiento no será satisfactorio.\nDesea guardar los pesos?", "Error archivo de pesos", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if ( respuesta == DialogResult.Yes)
                 {
                     intentar_nuevamente = true;

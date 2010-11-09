@@ -506,7 +506,7 @@
             this.campo_alpha_cp.Size = new System.Drawing.Size(61, 20);
             this.campo_alpha_cp.TabIndex = 4;
             this.campo_alpha_cp.Value = new decimal(new int[] {
-            8,
+            3,
             0,
             0,
             65536});
@@ -1636,11 +1636,11 @@
             this.ClientSize = new System.Drawing.Size(1176, 510);
             this.Controls.Add(this.barra_estado);
             this.Controls.Add(this.menu_principal);
-            this.Controls.Add(this.panel_ejecucion);
             this.Controls.Add(this.panel_entrenamiento);
             this.Controls.Add(this.panel_entrenamiento_cp);
             this.Controls.Add(this.panel_muestra_entrenamiento_bp);
             this.Controls.Add(this.panel_crear_muestras);
+            this.Controls.Add(this.panel_ejecucion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_principal;
