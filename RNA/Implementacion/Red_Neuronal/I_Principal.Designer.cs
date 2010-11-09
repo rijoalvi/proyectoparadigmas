@@ -529,7 +529,7 @@
             this.error_capa_oculta_cp.Size = new System.Drawing.Size(61, 20);
             this.error_capa_oculta_cp.TabIndex = 6;
             this.error_capa_oculta_cp.Value = new decimal(new int[] {
-            5,
+            2,
             0,
             0,
             131072});
@@ -921,6 +921,7 @@
             // 
             // campo_resultado_ejecucion_bp
             // 
+            this.campo_resultado_ejecucion_bp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.campo_resultado_ejecucion_bp.Location = new System.Drawing.Point(141, 212);
             this.campo_resultado_ejecucion_bp.Name = "campo_resultado_ejecucion_bp";
             this.campo_resultado_ejecucion_bp.Size = new System.Drawing.Size(100, 100);
@@ -1069,6 +1070,7 @@
             // 
             // campo_resultado_ejecucion_cp
             // 
+            this.campo_resultado_ejecucion_cp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.campo_resultado_ejecucion_cp.Location = new System.Drawing.Point(139, 210);
             this.campo_resultado_ejecucion_cp.Name = "campo_resultado_ejecucion_cp";
             this.campo_resultado_ejecucion_cp.Size = new System.Drawing.Size(100, 100);
@@ -1634,11 +1636,11 @@
             this.ClientSize = new System.Drawing.Size(1176, 510);
             this.Controls.Add(this.barra_estado);
             this.Controls.Add(this.menu_principal);
+            this.Controls.Add(this.panel_ejecucion);
             this.Controls.Add(this.panel_entrenamiento);
             this.Controls.Add(this.panel_entrenamiento_cp);
             this.Controls.Add(this.panel_muestra_entrenamiento_bp);
             this.Controls.Add(this.panel_crear_muestras);
-            this.Controls.Add(this.panel_ejecucion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu_principal;
