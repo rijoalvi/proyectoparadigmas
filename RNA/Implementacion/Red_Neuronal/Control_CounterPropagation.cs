@@ -21,7 +21,7 @@ namespace Red_Neuronal
         private double[,] pesos_anteriores;
         private const double bin_uno = 0.99;
         private const double bin_cero = 0.01;
-        private const int iteraciones_minimas = 500;
+        private const int iteraciones_minimas = 100;
 
         /// <summary>
         /// Constructor
@@ -64,10 +64,10 @@ namespace Red_Neuronal
                     //Calcula el peso
                     //if (i == 0) { peso = bin_uno; } else { peso = bin_cero + (r.NextDouble() * (bin_uno - bin_cero));}
                     if (i == 0)peso = bin_uno; 
-                    else if (i == 1) peso = bin_uno - 0.05;
-                    else if (i == 2) peso = bin_uno - 0.1;
-                    else if (i == 3) peso = bin_uno - 0.15;
-                    else if (i == 4) peso = bin_uno - 0.2;
+                    else if (i == 1) peso = bin_uno - 0.01;
+                    else if (i == 2) peso = bin_uno - 0.02;
+                    else if (i == 3) peso = bin_uno - 0.03;
+                    else if (i == 4) peso = bin_uno - 0.04;
 
                     red_neuronal.set_peso_oculta(h, i, peso);  //Establece el nuevo peso
                 }
@@ -193,7 +193,7 @@ namespace Red_Neuronal
                     archivo_muestras.Close();                   //Cierra el archivo
                     archivo.Close();
                     num_iteracion = iteraciones;                //Guarda las iteraciones que lleva
-                    alpha = alpha - (alpha* 0.1);               //Disminuye el alpha en un 10% del anterior
+                    alpha = alpha - (alpha* 0.005);              //Disminuye el alpha en un 0,5% del anterior
                     if (iteraciones_minimas > iteraciones)      //Si no ha cumplido con la cantidad minima de iteraciones
                     {
                         otra_iteracion = true;                                      //Continua iterando
@@ -228,10 +228,12 @@ namespace Red_Neuronal
                 {
                     double error_salida = Math.Abs(red_neuronal.get_peso_oculta(h,j) - pesos_anteriores[h,j]);  //Calcula el error de los pesos
                     error_generado += error_salida;
+                    if (error_salida > error_permitido) volver_iterar = true; //Si no cumple con el error debe de volver a iterar
+
                 }
             }
             error_generado /= (red_neuronal.get_cantidad_neuronas_oculta() * red_neuronal.get_cantidad_neuronas_entrada()); //Saca el promedio
-            if (error_generado > error_permitido/100) volver_iterar = true; //Si no cumple con el error debe de volver a iterar
+            if (error_generado > error_permitido) volver_iterar = true; //Si no cumple con el error debe de volver a iterar
 
             for (int j = 0; j < red_neuronal.get_cantidad_neuronas_oculta(); ++j)       //recorre todas las neuronas de la capa oculta
             {
