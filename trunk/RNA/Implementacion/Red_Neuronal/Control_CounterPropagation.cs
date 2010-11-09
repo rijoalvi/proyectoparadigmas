@@ -62,8 +62,13 @@ namespace Red_Neuronal
                 for (int h = 0; h < red_neuronal.get_cantidad_neuronas_entrada(); ++h)                 //Para cada una de las neuronas de entrada
                 {
                     //Calcula el peso
-                    if (i == 0) { peso = bin_uno; } else { peso = bin_cero + (r.NextDouble() * (bin_uno - bin_cero));}
-                    //peso = 1;
+                    //if (i == 0) { peso = bin_uno; } else { peso = bin_cero + (r.NextDouble() * (bin_uno - bin_cero));}
+                    if (i == 0)peso = bin_uno; 
+                    else if (i == 1) peso = bin_uno - 0.05;
+                    else if (i == 2) peso = bin_uno - 0.1;
+                    else if (i == 3) peso = bin_uno - 0.15;
+                    else if (i == 4) peso = bin_uno - 0.2;
+
                     red_neuronal.set_peso_oculta(h, i, peso);  //Establece el nuevo peso
                 }
             }
@@ -114,7 +119,7 @@ namespace Red_Neuronal
         }
 
         /// <summary>
-        /// Inicicliza la entrada para la ejecucion
+        /// Inicializa la entrada para la ejecucion
         /// </summary>
         /// <param name="muestra">Hilera con la muestra de un valor de entrada</param>
         private void inicializar_entrada(String muestra)
@@ -172,6 +177,7 @@ namespace Red_Neuronal
                 bool otra_iteracion = true;                                                         //Dice si se debe volver a iterar
                 int iteraciones = 0;                                                                //Cuenta el numero de iteraciones
                 int ganador = 0;                                                                    //Guarda el indice de la neurona ganadora en la capa oculta
+                double alpha = c_aprendizaje_alpha;
                 while (otra_iteracion)                                                              //Mientras deba iterar
                 {
                     FileStream archivo = new FileStream(ruta_muestras, FileMode.Open, FileAccess.Read);
@@ -181,23 +187,20 @@ namespace Red_Neuronal
                     {
                         inicializar_entrada(muestra);                                               //Ingresa los valores de entrada, normalizados
                         ganador = propagar_oculta();                                                //Propaga en la capa oculta
-                        ajustar_pesos_oculta(ganador, c_aprendizaje_alpha);                         //Ajusta los pesos de la capa oculta
-
-                        //if (ganador != 0) MessageBox.Show("Si gana otro hp aparate del 0");
-
+                        ajustar_pesos_oculta(ganador, alpha);                                       //Ajusta los pesos de la capa oculta
                     }
                     ++iteraciones;                              //Cuenta las iteraciones
                     archivo_muestras.Close();                   //Cierra el archivo
                     archivo.Close();
-                    num_iteracion = iteraciones;
+                    num_iteracion = iteraciones;                //Guarda las iteraciones que lleva
+                    alpha = alpha - (alpha* 0.1);               //Disminuye el alpha en un 10% del anterior
                     if (iteraciones_minimas > iteraciones)      //Si no ha cumplido con la cantidad minima de iteraciones
                     {
-                        otra_iteracion = true;  
+                        otra_iteracion = true;                                      //Continua iterando
                     }
                     else
                     {
-                        otra_iteracion = false;
-                        //otra_iteracion = iterar_nuevamente(error_permitido_oculta); //Calcula si debe de iterar de nuevo
+                        otra_iteracion = iterar_nuevamente(error_permitido_oculta); //Calcula si debe de iterar de nuevo
                     }
                 }
             }
@@ -206,8 +209,9 @@ namespace Red_Neuronal
                 return 0;           //Anuncia el error enviando 0
             }
             return 1;               //Anuncia que el proceso fue correcto enviando1
-            
+
         }
+
 
         /// <summary>
         /// Calcula si debe de iterar de nuevo
@@ -227,7 +231,7 @@ namespace Red_Neuronal
                 }
             }
             error_generado /= (red_neuronal.get_cantidad_neuronas_oculta() * red_neuronal.get_cantidad_neuronas_entrada()); //Saca el promedio
-            if (error_generado > error_permitido) volver_iterar = true; //Si no cumple con el error debe de volver a iterar
+            if (error_generado > error_permitido/100) volver_iterar = true; //Si no cumple con el error debe de volver a iterar
 
             for (int j = 0; j < red_neuronal.get_cantidad_neuronas_oculta(); ++j)       //recorre todas las neuronas de la capa oculta
             {
@@ -263,7 +267,7 @@ namespace Red_Neuronal
                     ganador = propagar_oculta();                                                    //Propaga en la capa oculta
                     ++promedios[i, ganador];
                     ++i;
-                    if(i+1 >= red_neuronal.get_cantidad_neuronas_oculta())i = 0;
+                    if(i >= red_neuronal.get_cantidad_neuronas_oculta())i = 0;
                 }
                 archivo_muestras.Close();           //Cierra el archivo
                 archivo.Close();
@@ -277,20 +281,21 @@ namespace Red_Neuronal
                     for (int k = 0; k < red_neuronal.get_cantidad_neuronas_oculta(); ++k)   //Recorre para cada una de las neuronas de la capa oculta (clase)
                     {
                         if (promedios[j, k] > max)           //Si es un nuevo maximo
-                        {          
+                        {
                             max = promedios[j, k];          //Guarda el nuevo maximo
                             indice_ganador = k;             //Guarda el indice del mayor
                         }
                     }
                     indices_ganador[j] = indice_ganador;    //Guarda el indice de la neurona ganadora para la muestra 
                 }
+
                 ajustar_pesos_salida(indices_ganador);      //Ajusta los pesos de la capa de salida
             }
             catch (Exception e)
             {
                 return 0;           //Anuncia el error enviando 0
             }
-            return 1;               //Anuncia que el proceso fue correcto enviando1
+            return 1;               //Anuncia que el proceso fue correcto enviando 1
 
         }
 
@@ -411,10 +416,7 @@ namespace Red_Neuronal
         private double nuevo_peso_oculta(int neurona_entrada, int neurona_oculta, double c_error)
         { 
             double w = red_neuronal.get_peso_oculta(neurona_entrada, neurona_oculta);
-            //return (w + c_error * (red_neuronal.get_valor_oculta(neurona_oculta)- w));
-            double PRUEBA = (w + c_error * (red_neuronal.get_valor_entrada(neurona_entrada) - w));
-            if (w == PRUEBA) MessageBox.Show("Esta mierda no ajusta ni verga");
-            return (w + c_error * (red_neuronal.get_valor_entrada(neurona_entrada) - w));
+            return (w + (c_error * (red_neuronal.get_valor_entrada(neurona_entrada) - w)));
         }
 
         /// <summary>
