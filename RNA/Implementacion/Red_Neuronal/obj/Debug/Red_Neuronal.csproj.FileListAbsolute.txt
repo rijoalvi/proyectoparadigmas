@@ -18,3 +18,6 @@ C:\Documents and Settings\a40235\Desktop\Proyecto pradigmas\RNA\Implementacion\R
 C:\Documents and Settings\a40235\Desktop\Proyecto pradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.I_Principal.resources
 C:\Documents and Settings\a40235\Desktop\Proyecto pradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.Properties.Resources.resources
 C:\Documents and Settings\a40235\Desktop\Proyecto pradigmas\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.csproj.GenerateResource.Cache
+C:\Documents and Settings\a40235\Desktop\New Folder\RNA\Implementacion\Red_Neuronal\bin\Debug\Red_Neuronal.exe.config
+C:\Documents and Settings\a40235\Desktop\New Folder\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.exe
+C:\Documents and Settings\a40235\Desktop\New Folder\RNA\Implementacion\Red_Neuronal\obj\Debug\Red_Neuronal.pdb
